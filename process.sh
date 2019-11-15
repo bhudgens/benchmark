@@ -122,7 +122,7 @@ _parse_filename_fio() {
 }
 
 _logIt() {
-  export LOGURL='https://services.glgresearch.com/log/stdout/bhudgens'
+  export LOGURL='https://services.glgresearch.com/log/stdout/benchmarks'
   curl -X POST -H "Content-Type: application/json" "${LOGURL}" -d@"${1}"
 }
 
