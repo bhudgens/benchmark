@@ -3,8 +3,11 @@
 # Run this like:
 # bash -c "$(curl -s https://raw.githubusercontent.com/bhudgens/benchmark/master/webinstall)"
 
-sudo apt-get update -y
-sudo apt-get install -y git
+if ! which git; then
+  sudo apt-get update -y
+  sudo apt-get install -y git
+fi
+sudo rm -rf /tmp/benchmark
 git clone 'https://github.com/bhudgens/benchmark.git' /tmp/benchmark
 sudo chmod 755 /tmp/benchmark/{benchmark.sh,cron.sh,process.sh}
 pushd "/tmp/benchmark" > /dev/null
