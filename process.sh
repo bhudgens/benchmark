@@ -219,17 +219,17 @@ done
 ## but it might make sense to have these as single records
 ## in sumo logic for easier processing
 ##########################################################################
-# set -o noglob
-# count=0
-# unset jq_recipe
-# unset file_list
-# for file in $(find . -type f -name "mergeme*"); do
-#   jq_recipe="${jq_recipe}.[$((count++))] * "
-#   file_list="${file_list}${file} "
-# done
-# # The recipe to merge looks like '.[0] * .[1] ...'
-# # Each array reference is a file.  So, above you see
-# # we add a " * " at the end of each line merge, below
-# # yanks off the final " * " we don't want in the recipe.
-# jq_recipe=$(echo "${jq_recipe}" | perl -pe 's| \* $||')
-# jq -s "${jq_recipe}" $file_list
+set -o noglob
+count=0
+unset jq_recipe
+unset file_list
+for file in $(find . -type f -name "mergeme*"); do
+  jq_recipe="${jq_recipe}.[$((count++))] * "
+  file_list="${file_list}${file} "
+done
+# The recipe to merge looks like '.[0] * .[1] ...'
+# Each array reference is a file.  So, above you see
+# we add a " * " at the end of each line merge, below
+# yanks off the final " * " we don't want in the recipe.
+jq_recipe=$(echo "${jq_recipe}" | perl -pe 's| \* $||')
+jq -s "${jq_recipe}" $file_list >  final_results.json
