@@ -1,0 +1,13 @@
+#! /usr/bin/env bash
+
+# Run this like:
+# bash -c "$(curl -s https://raw.githubusercontent.com/bhudgens/benchmark/master/webinstall)"
+
+sudo apt-get update -y
+sudo apt-get install -y git
+git clone 'https://github.com/bhudgens/benchmark.git' /tmp/benchmark
+sudo chmod 755 /tmp/benchmark/{benchmark.sh,cron.sh,process.sh}
+pushd "/tmp/benchmark" > /dev/null
+sudo cp benchmark.sh process.sh /usr/bin
+sudo cp cron.sh /etc/cron.hourly
+popd

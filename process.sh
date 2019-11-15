@@ -121,6 +121,13 @@ _parse_filename_fio() {
   blocksize=$(echo ${only_file} | cut -f2 -d '-')
 }
 
+_logIt() {
+  export LOGURL='https://services.glgresearch.com/log/stdout/bhudgens'
+  curl -X POST -H "Content-Type: application/json" "${LOGURL}" -d@"${1}"
+}
+
+host_ip=$(ip a s|sed -ne '/127.0.0.1/!{s/^[ \t]*inet[ \t]*\(172.[0-9.]\+\)\/.*$/\1/p}')
+
 ##########################################################################
 ## Go through the resulting benchmark files and convert
 ## them to json so we can upload them to sumologic
@@ -131,6 +138,7 @@ for file in $(find . -type f -name "*-mem-*.txt"); do
   stats=$(_parse_sysbench_mem "${file_contents}")
   echo '
   {
+    "host_ip":"'${host_ip}'",
     "sysbench":{
       "'${hw_type}'":{
         "'${test_type}'":{
@@ -140,8 +148,9 @@ for file in $(find . -type f -name "*-mem-*.txt"); do
     }
   }
   ' \
-  | jq -rc '.' \
-  > "./mergeme.${only_file}.json"
+    | jq -rc '.' \
+    > "./mergeme.${only_file}.json"
+  _logIt "./mergeme.${only_file}.json"
 done
 
 for file in $(find . -type f -name "*-cpu-*.txt"); do
@@ -150,6 +159,7 @@ for file in $(find . -type f -name "*-cpu-*.txt"); do
   stats=$(_parse_sysbench_cpu "${file_contents}")
   echo '
   {
+    "host_ip":"'${host_ip}'",
     "sysbench":{
       "'${hw_type}'":{
         "'${test_type}'":{
@@ -159,8 +169,9 @@ for file in $(find . -type f -name "*-cpu-*.txt"); do
     }
   }
   ' \
-  | jq -rc '.' \
-  > "./mergeme.${only_file}.json"
+    | jq -rc '.' \
+    > "./mergeme.${only_file}.json"
+  _logIt "./mergeme.${only_file}.json"
 done
 
 for file in $(find . -type f -name "*-io-*.txt"); do
@@ -169,6 +180,7 @@ for file in $(find . -type f -name "*-io-*.txt"); do
   stats=$(_parse_sysbench_io "${file_contents}")
   echo '
   {
+    "host_ip":"'${host_ip}'",
     "sysbench":{
       "'${hw_type}'":{
         "'${test_type}'":{
@@ -178,8 +190,9 @@ for file in $(find . -type f -name "*-io-*.txt"); do
     }
   }
   ' \
-  | jq -rc '.' \
-  > "./mergeme.${only_file}.json"
+    | jq -rc '.' \
+    > "./mergeme.${only_file}.json"
+  _logIt "./mergeme.${only_file}.json"
 done
 
 ##########################################################################
@@ -190,13 +203,15 @@ for file in $(find . -type f -name "fio*.json"); do
   file_contents=$(cat "$file")
   echo '
   {
+    "host_ip":"'${host_ip}'",
     "fio":{
       "'${blocksize}'":'${stats}'
     }
   }
   ' \
-  | jq -rc '.' \
-  > "./mergeme.${only_file}.json"
+    | jq -rc '.' \
+    > "./mergeme.${only_file}.json"
+  _logIt "./mergeme.${only_file}.json"
 done
 
 ##########################################################################
@@ -204,13 +219,17 @@ done
 ## but it might make sense to have these as single records
 ## in sumo logic for easier processing
 ##########################################################################
-set -o noglob
-count=0
-unset jq_recipe
-unset file_list
-for file in $(find . -type f -name "mergeme*"); do
-  jq_recipe="${jq_recipe}.[$((count++))] * "
-  file_list="${file_list}${file} "
-done
-jq_recipe=$(echo "${jq_recipe}" | perl -pe 's| \* $||')
-jq -s "${jq_recipe}" $file_list
+# set -o noglob
+# count=0
+# unset jq_recipe
+# unset file_list
+# for file in $(find . -type f -name "mergeme*"); do
+#   jq_recipe="${jq_recipe}.[$((count++))] * "
+#   file_list="${file_list}${file} "
+# done
+# # The recipe to merge looks like '.[0] * .[1] ...'
+# # Each array reference is a file.  So, above you see
+# # we add a " * " at the end of each line merge, below
+# # yanks off the final " * " we don't want in the recipe.
+# jq_recipe=$(echo "${jq_recipe}" | perl -pe 's| \* $||')
+# jq -s "${jq_recipe}" $file_list
