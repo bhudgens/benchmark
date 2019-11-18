@@ -116,7 +116,7 @@ for BLOCK_SIZE in ${BLOCK_SIZES}; do
     --direct=1 \
     --gtod_reduce=1 \
     --name="${HOST_IP}_BS=${BLOCK_SIZE}" \
-    --filename=random_read_write.fio \
+    --filename=/mnt/random_read_write.fio \
     --bs=${BLOCK_SIZE}k \
     --iodepth=64 \
     --size=6G \
@@ -126,7 +126,7 @@ for BLOCK_SIZE in ${BLOCK_SIZES}; do
     | jq -c -M --arg hostip ${HOST_IP} '
     {
       host: $hostip,
-      options: .jobs[0]."job options",
+      options: .jobs[0]["job options"],
       read: .jobs[0].read,
       write: .jobs[0].write,
       disk: .disk_util[0].name
