@@ -55,12 +55,13 @@ fi
 
 sudo sync # (move data, modified through FS -> HDD cache) + flush HDD cache
 echo 3 | sudo dd status=none of=/proc/sys/vm/drop_caches # (slab + pagecache) -> HDD (https://www.kernel.org/doc/Documentation/sysctl/vm.txt)
-sudo blockdev --flushbufs /dev/sda
-sudo blockdev --flushbufs /dev/sdb
-sudo hdparm -F /dev/sda
-sudo hdparm -F /dev/sdb
-sudo hdparm -W 0 /dev/sda
-sudo hdparm -W 0 /dev/sdb
+# This is just a collection of all the disks we found on all the machines.  It doesn't mean
+# all these disks are on every tested machine.  It's likely this will cause errors.  Who cares
+for disk in "/dev/sda" "/dev/sdb" "/dev/sdb" "/dev/xvda" "/dev/xvdg" "/dev/nvme0" "/dev/nvme1" "/dev/nvme2" "/dev/nvme3" "/dev/nvme4" "/dev/nvme5"; do
+  sudo blockdev --flushbufs "${disk}"
+  sudo hdparm -F "${disk}"
+  sudo hdparm -W 0 "${disk}"
+done
 
 ##########################################################################
 ## Sysbench
