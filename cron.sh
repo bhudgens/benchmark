@@ -1,5 +1,6 @@
 #! /usr/bin/env bash
 
+exit 0
 export TMPDIR="/benchmarking"
 mkdir -p "${TMPDIR}"
 WORKING_DIR=$(mktemp -d)
