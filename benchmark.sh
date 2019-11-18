@@ -124,7 +124,7 @@ for BLOCK_SIZE in ${BLOCK_SIZES}; do
     --filename=random_read_write.fio \
     --bs=${BLOCK_SIZE}k \
     --iodepth=64 \
-    --size=6G \
+    --size=1G \
     --readwrite=randrw \
     --rwmixread=75 \
     --output-format=json \
