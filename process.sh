@@ -138,6 +138,7 @@ for file in $(find . -type f -name "*-mem-*.txt"); do
   stats=$(_parse_sysbench_mem "${file_contents}")
   echo '
   {
+    "disk":"'${PWD}'",
     "host_ip":"'${host_ip}'",
     "sysbench":{
       "'${hw_type}'":{
@@ -159,6 +160,7 @@ for file in $(find . -type f -name "*-cpu-*.txt"); do
   stats=$(_parse_sysbench_cpu "${file_contents}")
   echo '
   {
+    "disk":"'${PWD}'",
     "host_ip":"'${host_ip}'",
     "sysbench":{
       "'${hw_type}'":{
@@ -180,6 +182,7 @@ for file in $(find . -type f -name "*-io-*.txt"); do
   stats=$(_parse_sysbench_io "${file_contents}")
   echo '
   {
+    "disk":"'${PWD}'",
     "host_ip":"'${host_ip}'",
     "sysbench":{
       "'${hw_type}'":{
@@ -203,6 +206,7 @@ for file in $(find . -type f -name "fio*.json"); do
   file_contents=$(cat "$file")
   echo '
   {
+    "disk":"'${PWD}'",
     "host_ip":"'${host_ip}'",
     "fio":{
       "'${blocksize}'":'${stats}'
