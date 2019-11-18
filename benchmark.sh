@@ -21,8 +21,7 @@ sudo apt-get install -y \
   librados-dev \
   librbd-dev \
   librdmacm-dev \
-  zlib1g-dev \
-  jq
+  zlib1g-dev
 
 ##########################################################################
 ## Installation
@@ -30,6 +29,12 @@ sudo apt-get install -y \
 if ! which sysbench; then
   curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.deb.sh | sudo bash
   sudo apt -y install sysbench
+fi
+
+if ! which jq; then
+  wget https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64
+  chmod +x jq-linux64
+  sudo mv jq-linux64 $(which jq || echo "/usr/bin/jq")
 fi
 
 FIO=/usr/local/bin/fio
