@@ -148,7 +148,7 @@ for file in $(find . -type f -name "*-mem-*.txt"); do
     }
   }
   ' \
-    | jq -rc '.' \
+    | jq -r -c '.' \
     > "./mergeme.${only_file}.json"
   _logIt "./mergeme.${only_file}.json"
 done
@@ -169,7 +169,7 @@ for file in $(find . -type f -name "*-cpu-*.txt"); do
     }
   }
   ' \
-    | jq -rc '.' \
+    | jq -r -c '.' \
     > "./mergeme.${only_file}.json"
   _logIt "./mergeme.${only_file}.json"
 done
@@ -190,7 +190,7 @@ for file in $(find . -type f -name "*-io-*.txt"); do
     }
   }
   ' \
-    | jq -rc '.' \
+    | jq -r -c '.' \
     > "./mergeme.${only_file}.json"
   _logIt "./mergeme.${only_file}.json"
 done
@@ -209,7 +209,7 @@ for file in $(find . -type f -name "fio*.json"); do
     }
   }
   ' \
-    | jq -rc '.' \
+    | jq -r -c '.' \
     > "./mergeme.${only_file}.json"
   _logIt "./mergeme.${only_file}.json"
 done
