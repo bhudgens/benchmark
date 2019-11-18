@@ -1,6 +1,5 @@
 #! /usr/bin/env bash
 
-exit 0
 for drive in "/mnt/osdrive" "/mnt/mounteddrive"; do
   export TMPDIR="${drive}"
   mkdir -p "${TMPDIR}"
