@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-for drive in "/mnt/osdrive" "/mnt/mounteddrive"; do
+for drive in "/mnt/mounteddrive"; do
   export TMPDIR="${drive}"
   mkdir -p "${TMPDIR}"
   WORKING_DIR=$(mktemp -d)
