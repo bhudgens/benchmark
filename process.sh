@@ -209,7 +209,7 @@ for file in $(find . -type f -name "fio*.json"); do
     "disk":"'${PWD}'",
     "host_ip":"'${host_ip}'",
     "fio":{
-      "'${blocksize}'":'${stats}'
+      "'${blocksize}'":'${file_contents}'
     }
   }
   ' \
