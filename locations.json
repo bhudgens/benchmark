@@ -1,0 +1,42 @@
+[
+  {
+    "ip": "172.26.134.9",
+    "cloud": "azure",
+    "instance": "Standard E64s v3 (64 vcpus, 432 GiB memory)"
+  },
+  {
+    "ip": "172.26.134.8",
+    "cloud": "azure",
+    "instance": "Standard D48s_v3 (48 vcpus, 192 GiB memory)"
+  },
+  {
+    "ip": "172.26.134.10",
+    "cloud": "azure",
+    "instance": "Standard L64s_v2 (64 vcpus, 512 GiB memory)"
+  },
+  {
+    "ip": "172.26.134.11",
+    "cloud": "azure",
+    "instance": "Standard E64is_v3 (64 vcpus, 432 GiB memory)"
+  },
+  {
+    "ip": "172.27.8.68",
+    "cloud": "aws",
+    "instance": "r5d.16xlarge"
+  },
+  {
+    "ip": "172.27.8.209",
+    "cloud": "aws",
+    "instance": "r4.16xlarge"
+  },
+  {
+    "ip": "172.27.8.198",
+    "cloud": "aws",
+    "instance": "c4.8xlarge"
+  },
+  {
+    "ip": "172.27.8.112",
+    "cloud": "aws",
+    "instance": "m5.16xlarge"
+  }
+]
